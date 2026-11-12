@@ -1,0 +1,4 @@
+demo:
+  an-password: ${DEMO_AN_PASSWORD:}
+  binh-password: ${DEMO_BINH_PASSWORD:}
+  staff-password: ${DEMO_STAFF_PASSWORD:}

@@ -1,0 +1,41 @@
+# REST Client example: replace placeholders locally; do not commit passwords.
+@baseUrl = http://localhost:8080/api/v1
+@anPassword = REPLACE_LOCALLY
+@staffPassword = REPLACE_LOCALLY
+@anAccount = REPLACE_WITH_UUID
+@binhAccount = REPLACE_WITH_UUID
+
+### Read your account
+GET {{baseUrl}}/accounts/{{anAccount}}
+Authorization: Basic an {{anPassword}}
+
+### Transfer; repeat this request unchanged to test idempotency
+POST {{baseUrl}}/transfers
+Authorization: Basic an {{anPassword}}
+Content-Type: application/json
+Idempotency-Key: learning-transfer-001
+
+{
+  "sourceAccountId": "{{anAccount}}",
+  "destinationAccountId": "{{binhAccount}}",
+  "amount": "300000",
+  "description": "Tien sach"
+}
+
+### History
+GET {{baseUrl}}/accounts/{{anAccount}}/entries?page=0&size=20
+Authorization: Basic an {{anPassword}}
+
+### Staff blocks account (unblock with ACTIVE)
+PATCH {{baseUrl}}/accounts/{{anAccount}}/status
+Authorization: Basic staff {{staffPassword}}
+Content-Type: application/json
+
+{"status":"BLOCKED"}
+
+### Staff creates customer (save returned ID)
+POST {{baseUrl}}/customers
+Authorization: Basic staff {{staffPassword}}
+Content-Type: application/json
+
+{"name":"Chi"}

@@ -1,0 +1,16 @@
+/target/
+/work/
+/.env
+/.idea/
+*.iml
+
+# Local secrets and generated logs
+/.env.*
+!/.env.example
+*.log
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+.DS_Store
